@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>Novo débito</title>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../js/ttform-utils.js"></script>
+<script src="../js/ttnumber-utils.js"></script>
+<script src="../js/lancamentos.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/lancamentos.css"></link>
+
+<script>
+
+			function loadData() {
+
+				params = getURLParameters();
+
+				if (params["id"] !== undefined) {
+					carregarLancamento(params["id"]);
+				}
+
+				toggleRealizado($("#fgRealizado").val());
+
+			}
+
+			function toggleRealizado(value) {
+
+				if (value == "true") {
+					if ($("#dtRealizado").val() == "") {
+						$("#dtRealizado").val($("#dtPrevisao").val());
+					}
+					$("#fieldDataRealizado").show();
+				}
+				else {					
+					$("#dtRealizado").val(null);
+					$("#fieldDataRealizado").hide();
+				}
+				
+			}
+
+			$(document).ready(function() {
+
+				$("#fgRealizado").change(function() {
+					toggleRealizado(this.value);
+				});
+				
+				$(".ttbtn-salvar").click(function() {
+					var json = getJSON("form");
+					gravarLancamento(json);					
+				});
+		
+				$("#btnExcluir").click(function() {
+					if (confirm("Após a exclusão, este lançamento não será recuperado, excluir mesmo assim?")) {
+						excluirLancamento($("#_id").val());
+					}
+				});
+					
+				loadData();
+
+			});
+			
+		</script>
+
+</head>
+<body>
+
+	<div class="tt-top-bar">
+		<button class="tt-button tt-button-delete" id="btnExcluir">Excluir</button>
+	</div>
+	<form class="ttform ttform-debito" id="frmNovoDebito"
+		name="frmNovoDebito">
+		<fieldset>
+			<legend>Débito</legend>
+			<input type="hidden" id="_id" name="_id" />
+			<p id="fieldValor">
+				<label for="valor">Valor</label> <input type="number" id="valor"
+					name="valor" placeholder="Quanto" onblur="formatInputCurrency(this)"/>
+			</p>
+			<p id="fieldPrevisao">
+				<label for="dtPrevisao">Data</label> <input type="date"
+					id="dtPrevisao" name="dtPrevisao" placeholder="Quando" />
+			</p>
+			<p id="fieldDescricao">
+				<label for="descricao">Descrição</label> <input type="text"
+					id="descricao" name="descricao" placeholder="Referente à" />
+			</p>
+			<p id="fieldRealizado">
+				<label for="fgRealizado">Pago?</label> <select id="fgRealizado"
+					name="fgRealizado">
+					<option value="true">SIM</option>
+					<option value="false" selected="true">NÃO</option>
+				</select>
+			</p>
+			<p id="fieldDataRealizado">
+				<label for="dtRealizado">Data do pagamento</label> <input type="date"
+					id="dtRealizado" name="dtRealizado" placeholder="Quando" />
+			</p>
+			<input type="hidden" id="sgTipoLancamento" name="sgTipoLancamento"
+				value="DEBITO" />
+		</fieldset>
+	</form>
+	<button id="btnVoltar" name="btnVoltar" class="tt-button ttbtn-voltar"
+		onclick="history.back()">Voltar</button>
+	<button id="btnSalvar" name="btnSalvar" class="tt-button ttbtn-salvar">Salvar</button>
+</body>
+</html>

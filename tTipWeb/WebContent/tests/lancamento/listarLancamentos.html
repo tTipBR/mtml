@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Teste de listagem de lançamentos</title>
+	
+	<script>
+
+		function getLancamento() {
+
+			request = new XMLHttpRequest();
+
+			request.open("GET", "http://127.0.0.1:8080/tTipWeb/api/lancamento", false);
+			request.send();
+
+			retorno = request.responseText;
+			lista = JSON.parse(retorno);
+
+			content = "";
+
+			for (i = 0; i < lista.length; i++) {
+				content += "<tr>";
+				content += "<td>" + lista[i].dtRealizado + "</td>";
+				content += "<td>" + lista[i].descricao + "</td>";
+				content += "<td>" + lista[i].valor + "</td>";
+				content += "<td>"
+					 + lista[i].sgTipoLancamento.substr(0, 1) + "</td>";
+				content += "<td>" + lista[i].vlPrevisao + "</td>";
+				content += "<td>" + lista[i].vlSaldo + "</td>";
+				content += "</tr>"
+			}
+			
+			document.getElementById("tabLancamentos").innerHTML = content;		
+
+		}		
+		
+		
+	</script>
+	
+</head>
+
+<body onLoad="getLancamento()">
+
+	<table id="tabLancamentos" border="1">
+	</table>
+
+</body>
+</html>

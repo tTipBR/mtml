@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>tTip - MoneyTimeline</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="../js/lancamentos.js"></script>
+		<link rel="stylesheet" type="text/css" href="../css/lancamentos.css"></link>
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">		
+	</head>
+	<script>
+		$(document).ready(function() {
+			listarLancamentos(divContainer);
+		});
+
+		
+
+	</script>
+	<body>
+	
+		<div class="tt-content-body" id="divContainer">
+		</div>
+		
+		<div class="tt-bottom-bar" id="divBottom">
+			<a href="./edicaodebito.html">
+				<button class="tt-button" id="btnNovoDebito">+</button>
+			</a>
+			<a href="./edicaocredito.html">
+				<button class="tt-button" id="btnNovoCredito">+</button>
+			</a>
+		</div>
+	
+	</body>
+</html>
